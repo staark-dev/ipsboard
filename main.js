@@ -76,30 +76,38 @@ class IPSBoard {
         return true;
     }
 
-    noPosts(forumRow) {
+    noPosts(forumIndex) {
         if(Number(forumRow.posts) === 0) {
-            const forumRow = document.querySelector('.cForumRow[data-forumid="'+ forumRow +'"]');
+            const forumRow = document.querySelector('.cForumRow[data-forumid="' + forumIndex + '"]');
+            if (!forumRow) return;
             
-            if(forumRow) {
+            const posts = Number(forumRow.getAttribute('data-posts') || 0);
+            
+            if (posts === 0) {
                 const statsElement = forumRow.querySelector('.ipsDataItem_stats');
                 if (statsElement) {
-                     statsElement.innerHTML = '';
+                    statsElement.innerHTML = '';
                 }
-
+        
                 const lastPosterElement = forumRow.querySelector('.ipsDataItem_lastPoster');
-                
                 if (lastPosterElement) {
-                    lastPosterElement.innerHTML = '<ul class="ipsDataItem_lastPoster ipsDataItem_withPhoto"><li class="ipsType_light ipsResponsive_showDesktop">No posts here yet</li></ul>';
+                    lastPosterElement.innerHTML =
+                        '<ul class="ipsDataItem_lastPoster ipsDataItem_withPhoto">' +
+                            '<li class="ipsType_light ipsResponsive_showDesktop">No posts here yet</li>' +
+                        '</ul>';
                 }
             }
         }
     }
 
     forumRows(posts) {
-        document.currentScript.closest('.cForumRow')
-            .setAttribute('data-forumid', Array.from(document.querySelectorAll('.cForumRow')).indexOf(document.currentScript.closest('.cForumRow')));
-        document.currentScript.closest('.cForumRow')
-            .setAttribute('posts', posts);
+        const row = document.currentScript.closest('.cForumRow');
+        if (!row) return;
+    
+        const index = Array.from(document.querySelectorAll('.cForumRow')).indexOf(row);
+    
+        row.setAttribute('data-forumid', index);
+        row.setAttribute('data-posts', posts);
     }
 
     toggleCategory(categoryId) {
