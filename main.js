@@ -76,9 +76,10 @@ class IPSBoard {
         return true;
     }
 
-    noPosts() {
-        if(Number(this.getVariable('ips', 'forumrow_posts')) === 0) {
-            const forumRow = document.querySelector('.cForumRow[data-forumid="'+ this.getVariable('ips', 'forumrow') +'"]');
+    noPosts(forumRow) {
+        if(Number(forumRow.posts) === 0) {
+            const forumRow = document.querySelector('.cForumRow[data-forumid="'+ forumRow +'"]');
+            
             if(forumRow) {
                 const statsElement = forumRow.querySelector('.ipsDataItem_stats');
                 if (statsElement) {
@@ -92,6 +93,13 @@ class IPSBoard {
                 }
             }
         }
+    }
+
+    forumRows(posts) {
+        document.currentScript.closest('.cForumRow')
+            .setAttribute('data-forumid', Array.from(document.querySelectorAll('.cForumRow')).indexOf(document.currentScript.closest('.cForumRow')));
+        document.currentScript.closest('.cForumRow')
+            .setAttribute('posts', posts);
     }
 
     toggleCategory(categoryId) {
