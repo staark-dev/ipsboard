@@ -39,4 +39,5 @@ class IPSBoard {
     }
 }
 
+console.log("IPSBoard script has been initialized !");
 window.IPSBoard = IPSBoard;
