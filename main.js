@@ -2,6 +2,8 @@ class IPSBoard {
     constructor() {
         this.boards = new Map();
         this.variables = new Map();
+        this.FA = window.FA || {};
+        this.user = window._userdata || {};
     }
 
     createBoard(name) {
@@ -41,3 +43,5 @@ class IPSBoard {
 
 console.log("IPSBoard script has been initialized !");
 window.IPSBoard = IPSBoard;
+window.IPS_FA = window.FA || {};
+window.IPS_USER = window._userdata || {};
